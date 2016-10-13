@@ -109,7 +109,7 @@ class TableViewController: UITableViewController {
     @IBAction func unwindToTableView(_ sender: UIStoryboardSegue) {
         // Seats a guest that was chosen from the guest picker controller
         if let sourceViewController = sender.source as? GuestPickerViewController, let indexPath = tableView.indexPathForSelectedRow {
-            let seatNum = (indexPath as NSIndexPath).row - 1;
+            let seatNum = indexPath.row - 1;
             let seat = table!.seats[seatNum];
             chosenGuest = sourceViewController.chosenGuest;
             seat.seatGuest(chosenGuest);

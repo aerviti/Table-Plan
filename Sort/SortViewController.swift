@@ -171,7 +171,7 @@ class SortViewController: UIViewController, UITableViewDelegate, UITableViewData
         activityIndicator.startAnimating();
         
         // Run sort in the background
-        DispatchQueue.main.async {
+        DispatchQueue.global(qos: .userInitiated).async {
             self.sortIt();
             
             DispatchQueue.main.async {

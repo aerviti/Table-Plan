@@ -9,11 +9,12 @@
 import UIKit
 import MessageUI
 
+
 class SettingsTableViewController: UITableViewController, MFMailComposeViewControllerDelegate {
     
     let APPID = "1147076572"
     let APPURL = "itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=1147076572&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software"
-    let APPVER = "1.0.0"
+    let APPVER = "1.0.1"
 
     
     //MARK: Properties
@@ -227,4 +228,10 @@ class SettingsTableViewController: UITableViewController, MFMailComposeViewContr
         let destinationViewController = segue.destination;
         destinationViewController.navigationItem.title = "Help";
     }
+    
+    
+    
+    // MARK: - PDF Creations
+    
+    
 }

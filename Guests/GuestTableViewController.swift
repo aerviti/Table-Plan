@@ -184,7 +184,7 @@ class GuestTableViewController: UITableViewController {
         if editingStyle == .delete {
             let index = tablePlan.getIndex(indexPath.section, indexPath.row);
             tablePlan.removeGuest(index);
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.deleteRows(at: [indexPath], with: .fade);
             (tabBarController as! TabBarController).savePlans();
         }
     }

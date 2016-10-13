@@ -100,6 +100,16 @@ class TablePlan : NSObject, NSCoding {
         removedGuest.seat?.guestSeated = nil;
         removeFromFirstnameCount(removedGuest.firstName);
         removeFromLastnameCount(removedGuest.lastName);
+        
+        // Clear constraints of associated guests
+        for guest in removedGuest.mustSitNextTo {
+            guest.removeMustSitNextTo(removedGuest);
+        }
+        for guest in removedGuest.cannotSitNextTo {
+            guest.removeCannotSitNextTo(removedGuest);
+        }
+        (removedGuest.mustSitAtTable.first as Guest?)?.removeMustSitAtTableOf(removedGuest);
+        (removedGuest.cannotSitAtTable.first as Guest?)?.removeCannotSitAtTableOf(removedGuest);
     }
     
     
@@ -188,7 +198,7 @@ class TablePlan : NSObject, NSCoding {
         if (sort == .FirstName) {
             index = getFirstnameGuestIndex(section, row: row);
         }else if (sort == .LastName) {
-            index =  getLastnameGuestIndex(section, row: row);
+            index = getLastnameGuestIndex(section, row: row);
         }else {
             if (section == 0) {
                 index = row;
@@ -239,6 +249,11 @@ class TablePlan : NSObject, NSCoding {
                 unseated += 1;
                 guest!.table = nil;
                 guest!.seat = nil;
+            }
+        }
+        for guest in guestList {
+            if guest.tableConstraint == removedTable {
+                guest.removeTableConstraint();
             }
         }
     }

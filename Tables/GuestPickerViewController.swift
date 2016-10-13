@@ -148,16 +148,16 @@ class GuestPickerViewController: UITableViewController, UISearchResultsUpdating,
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Set guest to nil if first "No Guest" cell is chosen
-        if ((indexPath as NSIndexPath).row == 0) {
+        if (indexPath.row == 0) {
             chosenGuest = nil;
         
         // Set guest if a search has been conducted
         }else if searchController.isActive {
-            chosenGuest = filteredGuests[(indexPath as NSIndexPath).row-1];
+            chosenGuest = filteredGuests[indexPath.row-1];
             
         // Set guest if a search has NOT been conducted
         }else {
-            chosenGuest = unfilteredGuests[(indexPath as NSIndexPath).row-1];
+            chosenGuest = unfilteredGuests[indexPath.row-1];
         }
         // Unwind to added 
         if addingConstraint {

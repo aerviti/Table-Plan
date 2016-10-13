@@ -23,7 +23,6 @@ class FloorPlanViewController: UIViewController, UIPopoverPresentationController
 
     // MARK: Properties
     @IBOutlet weak var scrollView: UIScrollView!
-    var addTableAlert: UIAlertController!;
     var infoAlert: UIAlertController!;
     
     var tablePlan: TablePlan!;
@@ -74,15 +73,6 @@ class FloorPlanViewController: UIViewController, UIPopoverPresentationController
         scrollView.addGestureRecognizer(longPressGesture);
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(FloorPlanViewController.handleTap(_:)));
         scrollView.addGestureRecognizer(tapGesture);
-        
-        // Set up popover presentation controller
-        addTableAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet);
-        let addTable = UIAlertAction(title: "Add Table", style: .default) { (_) in
-            self.performSegue(withIdentifier: "AddTableSegue", sender: nil);
-        }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil);
-        addTableAlert.addAction(addTable);
-        addTableAlert.addAction(cancel);
         
         //Load tables on view
         for table in tablePlan!.tableList {
@@ -224,11 +214,22 @@ class FloorPlanViewController: UIViewController, UIPopoverPresentationController
             }else if (selectedView == scrollView) {
                 xToAdd = location.x;
                 yToAdd = location.y;
-                addTableAlert.popoverPresentationController?.sourceView = scrollView;
-                addTableAlert.popoverPresentationController?.sourceRect = CGRect(x: xToAdd!, y: yToAdd!, width: 1, height: 1);
-                present(addTableAlert, animated: true, completion: nil);
+                presentAddTableAlert();
             }
         }
+    }
+    
+    fileprivate func presentAddTableAlert() {
+        let addTableAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet);
+        let addTable = UIAlertAction(title: "Add Table", style: .default) { (_) in
+            self.performSegue(withIdentifier: "AddTableSegue", sender: nil);
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil);
+        addTableAlert.addAction(addTable);
+        addTableAlert.addAction(cancel);
+        addTableAlert.popoverPresentationController?.sourceView = scrollView;
+        addTableAlert.popoverPresentationController?.sourceRect = CGRect(x: xToAdd!, y: yToAdd!, width: 1, height: 1);
+        present(addTableAlert, animated: true, completion: nil);
     }
     
     
