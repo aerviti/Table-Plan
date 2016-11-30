@@ -202,7 +202,7 @@ class TableAddViewController: UITableViewController, UIPickerViewDelegate, UIPic
             picker.selectRow(row, inComponent: 0, animated: false);
             self.pickerView(picker, didSelectRow: row, inComponent: 0);
             self.groupPickerPressed();
-            (self.tabBarController as! TabBarController).savePlans();
+            (self.tabBarController as? TabBarController)?.savePlans();
         }
         addGroupAction.isEnabled = false;
         alertController.addTextField {(textField) in

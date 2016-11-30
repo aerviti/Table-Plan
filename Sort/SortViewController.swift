@@ -191,11 +191,15 @@ class SortViewController: UIViewController, UITableViewDelegate, UITableViewData
             // Do a resort
             if tableSorter.resortAllGuests(REPITITIONS) {
                 sortSuccessful = true;
-                applySortButton.isEnabled = true;
+                DispatchQueue.main.async {
+                    self.applySortButton.isEnabled = true;
+                }
                 // Failed resort
             }else {
-                errorLabel.text = seatingError;
-                applySortButton.isEnabled = false;
+                DispatchQueue.main.async {
+                    self.errorLabel.text = self.seatingError;
+                    self.applySortButton.isEnabled = false;
+                }
                 sortSuccessful = false;
             }
             
@@ -203,11 +207,15 @@ class SortViewController: UIViewController, UITableViewDelegate, UITableViewData
         }else if tableSorter.sortAllGuests(REPITITIONS) {
             sorted = true;
             sortSuccessful = true;
-            applySortButton.isEnabled = true;
+            DispatchQueue.main.async {
+                self.applySortButton.isEnabled = true;
+            }
             // Failed Sort
         }else {
-            errorLabel.text = seatingError;
-            applySortButton.isEnabled = false;
+            DispatchQueue.main.async {
+                self.errorLabel.text = self.seatingError;
+                self.applySortButton.isEnabled = false;
+            }
             sortSuccessful = false;
         }
     }

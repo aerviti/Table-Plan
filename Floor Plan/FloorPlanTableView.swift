@@ -153,18 +153,18 @@ class FloorPlanTableView: UIView {
     fileprivate func layoutRectOneSided() {
         // Set self's frame in case of table edit
         if let frameDimensions = getDimensions(table!) {
-            self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: frameDimensions.width, height: frameDimensions.height);
+            self.bounds = CGRect(x: self.bounds.origin.x, y: self.bounds.origin.y, width: frameDimensions.width, height: frameDimensions.height);
         }
         
         // Set view's frame to follow the given table
-        tableView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height);
+        tableView.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height);
         nameLabel.text = table!.name;
         groupLabel.text = table!.tableGroup;
-        nameLabel.frame = CGRect(x: 0, y: chairSize, width: self.frame.width, height: tableHeight/2);
-        groupLabel.frame = CGRect(x: 0, y: chairSize+tableHeight/2, width: self.frame.width, height: tableHeight/2);
+        nameLabel.frame = CGRect(x: 0, y: chairSize, width: self.bounds.width, height: tableHeight/2);
+        groupLabel.frame = CGRect(x: 0, y: chairSize+tableHeight/2, width: self.bounds.width, height: tableHeight/2);
         
         // Set the table image's frame and image
-        tableImg.frame = CGRect(x: 0, y: chairSize, width: self.frame.width, height: tableHeight);
+        tableImg.frame = CGRect(x: 0, y: chairSize, width: self.bounds.width, height: tableHeight);
         tableImg.image = UIImage(named: "rectTable");
         
         // Place seat image views for each seat
@@ -180,18 +180,18 @@ class FloorPlanTableView: UIView {
     fileprivate func layoutRectTwoSided() {
         // Set self's frame in case of table edit
         if let frameDimensions = getDimensions(table!) {
-            self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: frameDimensions.width, height: frameDimensions.height);
+            self.bounds = CGRect(x: self.bounds.origin.x, y: self.bounds.origin.y, width: frameDimensions.width, height: frameDimensions.height);
         }
         
         // Set view's frame to follow the given table
-        tableView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height);
+        tableView.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height);
         nameLabel.text = table!.name;
         groupLabel.text = table!.tableGroup;
-        nameLabel.frame = CGRect(x: 0, y: chairSize, width: self.frame.width, height: tableHeight/2);
-        groupLabel.frame = CGRect(x: 0, y: chairSize+tableHeight/2, width: self.frame.width, height: tableHeight/2);
+        nameLabel.frame = CGRect(x: 0, y: chairSize, width: self.bounds.width, height: tableHeight/2);
+        groupLabel.frame = CGRect(x: 0, y: chairSize+tableHeight/2, width: self.bounds.width, height: tableHeight/2);
         
         // Set the table image's frame and image
-        tableImg.frame = CGRect(x: 0, y: chairSize, width: self.frame.width, height: tableHeight);
+        tableImg.frame = CGRect(x: 0, y: chairSize, width: self.bounds.width, height: tableHeight);
         tableImg.image = UIImage(named: "rectTable");
         
         // Place seat image views for each seat at the top of the table
@@ -207,7 +207,7 @@ class FloorPlanTableView: UIView {
         
         // Place seat image views for each seat at the bottom of the table
         let secondHalf = table!.numOfSeats - firstHalf;
-        let bottomSegment = self.frame.width / CGFloat(secondHalf);
+        let bottomSegment = self.bounds.width / CGFloat(secondHalf);
         let bottomSeatSpacing = (bottomSegment - chairSize) / 2;
         for chairNum in firstHalf..<table!.numOfSeats {
             
@@ -226,12 +226,12 @@ class FloorPlanTableView: UIView {
     fileprivate func layoutOval() {
         // Set self's frame in case of table edit
         if let frameDimensions = getDimensions(table!) {
-            self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: frameDimensions.width, height: frameDimensions.height);
+            self.bounds = CGRect(x: self.bounds.origin.x, y: self.bounds.origin.y, width: frameDimensions.width, height: frameDimensions.height);
         }
         
         // Set view's frame to follow the given table
         let tableWidth = tableSegment * CGFloat((table!.numOfSeats+1)/2 - 1);
-        tableView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height);
+        tableView.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height);
         nameLabel.text = table!.name;
         groupLabel.text = table!.tableGroup;
         nameLabel.frame = CGRect(x: chairSize, y: chairSize, width: tableWidth, height: tableHeight/2);
@@ -255,7 +255,7 @@ class FloorPlanTableView: UIView {
         // Place seat image on right of table
         let rightSeat = seatImages[firstHalf];
         let seatStartX = tableWidth + chairSize;
-        var seatStartY = (self.frame.height / 2) - (chairSize / 2);
+        var seatStartY = (self.bounds.height / 2) - (chairSize / 2);
         rightSeat.frame = CGRect(x: seatStartX, y: seatStartY, width: chairSize, height: chairSize);
         rightSeat.isHidden = false;
         firstHalf += 1;
@@ -279,7 +279,7 @@ class FloorPlanTableView: UIView {
         
         // Place seat image and label on left of table
         let leftSeat = seatImages[lastSeat];
-        seatStartY = (self.frame.height / 2) - (chairSize / 2);
+        seatStartY = (self.bounds.height / 2) - (chairSize / 2);
         leftSeat.frame = CGRect(x: 0, y: seatStartY, width: chairSize, height: chairSize);
         leftSeat.isHidden = false;
     }
@@ -288,13 +288,13 @@ class FloorPlanTableView: UIView {
     fileprivate func layoutRound() {
         // Set self's frame in case of table edit
         if let frameDimensions = getDimensions(table!) {
-            self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: frameDimensions.width, height: frameDimensions.height);
+            self.bounds = CGRect(x: self.bounds.origin.x, y: self.bounds.origin.y, width: frameDimensions.width, height: frameDimensions.height);
         }
         
         // Set view's frame to follow the given table
         let tableCircumference = maxTableCircumference/12 * CGFloat(table!.numOfSeats);
         let tableRadius = tableCircumference / CGFloat(2*M_PI);
-        tableView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height);
+        tableView.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height);
         nameLabel.text = table!.name;
         groupLabel.text = table!.tableGroup;
         nameLabel.frame = CGRect(x: chairSize, y: tableView.center.y-tableHeight/2, width: tableRadius*2, height: tableHeight/2);

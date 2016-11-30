@@ -177,18 +177,7 @@ class TablePlan : NSObject, NSCoding {
     
     /* Return guest of the guestList given a section and row from an indexPath and the current sort */
     func getGuestAtIndex(_ section: Int, _ row: Int) -> Guest {
-        let index: Int;
-        if (sort == .FirstName) {
-             index = getFirstnameGuestIndex(section, row: row);
-        }else if (sort == .LastName) {
-            index =  getLastnameGuestIndex(section, row: row);
-        }else {
-            if (section == 0) {
-                index = row;
-            }else {
-                index = row + unseated;
-            }
-        }
+        let index = getIndex(section, row);
         return guestList[index];
     }
     
@@ -292,6 +281,25 @@ class TablePlan : NSObject, NSCoding {
         }
     }
     
+    /* Reloads certain data counts incase those numbers were messed up from a bug. */
+    func reloadData() {
+        // Clear data to be reloaded
+        unseated = 0;
+        firstNameCount = ["#" : 0, "A" : 0,"B" : 0,"C" : 0,"D" : 0,"E" : 0,"F" : 0,"G" : 0,"H" : 0,"I" : 0,"J" : 0,"K" : 0,"L" : 0,"M" : 0,"N" : 0,"O" : 0,"P" : 0,"Q" : 0,"R" : 0,"S" : 0,"T" : 0,"U" : 0,"V" : 0,"W" : 0,"X" : 0,"Y" : 0,"Z" : 0];
+        lastNameCount = ["#" : 0, "A" : 0,"B" : 0,"C" : 0,"D" : 0,"E" : 0,"F" : 0,"G" : 0,"H" : 0,"I" : 0,"J" : 0,"K" : 0,"L" : 0,"M" : 0,"N" : 0,"O" : 0,"P" : 0,"Q" : 0,"R" : 0,"S" : 0,"T" : 0,"U" : 0,"V" : 0,"W" : 0,"X" : 0,"Y" : 0,"Z" : 0];
+        
+        // Update unseated count
+        for guest in guestList {
+            if !guest.isSeated() {
+                unseated += 1;
+            }
+            
+            // Update firstname and lastname counts
+            addToFirstnameCount(guest.firstName);
+            addToLastnameCount(guest.lastName);
+        }
+        
+    }
     
     
     //MARK: Sort Functions

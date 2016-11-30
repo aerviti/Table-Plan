@@ -110,7 +110,9 @@ class TitleViewController: UIViewController, UITableViewDelegate, UITableViewDat
             let tabBarController = segue.destination as! TabBarController;
             if let selectedPlanCell = sender as? TitleTableViewCell {
                 let index = titleTable.indexPath(for: selectedPlanCell)!;
-                tabBarController.tablePlan = tablePlans[(index as NSIndexPath).row];
+                let selectedPlan = tablePlans[(index as NSIndexPath).row];
+                selectedPlan.reloadData();
+                tabBarController.tablePlan = selectedPlan;
                 tabBarController.planIndexPath = index;
                 tabBarController.tablePlans = tablePlans;
             }
@@ -135,7 +137,7 @@ class TitleViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     
     
-     /*
+    /*
      
     // MARK: - TESTING
     

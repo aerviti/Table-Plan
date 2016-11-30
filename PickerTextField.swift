@@ -12,7 +12,8 @@ class PickerTextField: UITextField {
 
     /* Stops user from editing the text field manually through actions. */
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        self.resignFirstResponder();
+        //Is this necessary? Caused crash
+        //self.resignFirstResponder();
         return false;
     }
     

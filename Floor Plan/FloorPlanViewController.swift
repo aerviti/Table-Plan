@@ -95,11 +95,6 @@ class FloorPlanViewController: UIViewController, UIPopoverPresentationController
     
     // Update views and scroll view when view appears
     override func viewDidAppear(_ animated: Bool) {
-        for tableView in tableViews {
-            if (tableView.table!.rotated) {
-                tableView.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI_2));
-            }
-        }
         updateContentView();
         
         if tablePlan!.floorPlanNotOpened {
@@ -139,9 +134,6 @@ class FloorPlanViewController: UIViewController, UIPopoverPresentationController
             if (!tableView.table!.isPlaced()) {
                 tableView.removeFromSuperview();
                 tableViews.remove(tableView);
-            }else {
-                tableView.transform = CGAffineTransform(rotationAngle: 0);
-                tableView.setNeedsDisplay();
             }
         }
     }
@@ -318,7 +310,8 @@ class FloorPlanViewController: UIViewController, UIPopoverPresentationController
                     self.chosenTableView!.removeFromSuperview();
                     self.tableViews.remove(self.chosenTableView!);
                     self.chosenTable!.unplaceTable();
-            }
+                    self.updateContentView();
+                }
                 alertController.addAction(cancelAction);
                 alertController.addAction(deleteButton);
                 self.present(alertController, animated: true, completion: nil);
