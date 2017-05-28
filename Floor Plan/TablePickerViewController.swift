@@ -12,13 +12,13 @@ class TablePickerViewController: UITableViewController, UISearchResultsUpdating,
     
     // MARK: Properties
     
-    var searchController: UISearchController!;
+    weak var searchController: UISearchController!;
     var tablePlan: TablePlan!;
     var unplacedTables: [Table] = [Table]();
     var filteredTables: [Table] = [Table]();
     var chosenTable: Table!;
     
-    var cancelButton: UIBarButtonItem!;
+    weak var cancelButton: UIBarButtonItem?;
     
     
     
@@ -29,7 +29,7 @@ class TablePickerViewController: UITableViewController, UISearchResultsUpdating,
         super.viewDidLoad()
         
         // Set up search bar
-        searchController = UISearchController(searchResultsController: nil);
+        let searchController = UISearchController(searchResultsController: nil);
         searchController.dimsBackgroundDuringPresentation = false;
         searchController.searchResultsUpdater = self;
         definesPresentationContext = true;
@@ -37,6 +37,7 @@ class TablePickerViewController: UITableViewController, UISearchResultsUpdating,
         searchController.searchBar.delegate = self;
         navigationItem.titleView = searchController.searchBar;
         (searchController.searchBar.value(forKey: "searchField") as? UITextField)?.placeholder = "Search Tables";
+        self.searchController = searchController;
         
         
         // Filter tables to only show unplaced ones
@@ -62,7 +63,9 @@ class TablePickerViewController: UITableViewController, UISearchResultsUpdating,
     
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        navigationItem.setRightBarButton(cancelButton, animated: true);
+        if let cancelButton = self.cancelButton {
+            navigationItem.setRightBarButton(cancelButton, animated: true);
+        }
     }
     
     

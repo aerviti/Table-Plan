@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import Fabric
-import Crashlytics
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,9 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        //Initialize kit
-        Fabric.sharedSDK().debug = true;
-        Fabric.with([Crashlytics.self]);
+        // Use Firebase library to configure APIs and setup ads
+        FIRApp.configure();
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-3940256099942544/2934735716");
+
         
         /*
         // Register iCloud token

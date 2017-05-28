@@ -119,7 +119,7 @@ class TableTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if (section == tablePlan.tableList.count - 1) {
-            return 20;
+            return TitleViewController.footerSize;
         }
         return 2;
     }

@@ -23,7 +23,6 @@ class GuestTableViewController: UITableViewController {
     
     
     
-    
     // MARK: - View Prep
 
     override func viewDidLoad() {
@@ -108,6 +107,16 @@ class GuestTableViewController: UITableViewController {
         }else {
             return UITableViewAutomaticDimension;
         }
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if ((tablePlan.sort == .FirstName || tablePlan.sort == .LastName) && section == 26) {
+            return TitleViewController.footerSize;
+        }else if ((tablePlan.sort == .UnseatedFirstName || tablePlan.sort == .UnseatedLastName) && section == 1) {
+            return TitleViewController.footerSize;
+        }
+        return UITableViewAutomaticDimension;
     }
     
 

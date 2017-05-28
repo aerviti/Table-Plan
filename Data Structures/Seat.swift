@@ -7,16 +7,17 @@
 //
 
 import Foundation
+import FirebaseAnalytics
 
 class Seat : NSObject, NSCoding {
     
     //MARK: - Properties
     
-    var locatedAtTable: Table;
+    weak var locatedAtTable: Table?;
     var seatNumOfTable: Int;
-    var guestSeated: Guest?;
-    var seatToLeft: Seat?;
-    var seatToRight: Seat?;
+    weak var guestSeated: Guest?;
+    weak var seatToLeft: Seat?;
+    weak var seatToRight: Seat?;
     
     
     
@@ -41,11 +42,19 @@ class Seat : NSObject, NSCoding {
     //MARK: - Functions
     
     func seatGuest(_ guest: Guest?) {
+        guard let parentPlan = locatedAtTable?.plan else {
+            print("No parent table set for seat or no parent plan for parent table set. (seatGuest)");
+            FIRAnalytics.logEvent(withName: "Caught_Error", parameters: [
+                "name": "seatGuest" as NSObject,
+                "full_text": "No parent table set for seat or no parent plan for parent table set." as NSObject
+                ]);
+            return;
+        }
         if (guestSeated != nil && guestSeated != guest) {
-            locatedAtTable.plan.unseated += 1;
+            parentPlan.unseated += 1;
         }
         if (guest != nil && !guest!.isSeated()) {
-            locatedAtTable.plan.unseated -= 1;
+            parentPlan.unseated -= 1;
         }
         guestSeated?.seat = nil;
         guestSeated = guest;

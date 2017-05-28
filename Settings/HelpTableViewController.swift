@@ -13,9 +13,9 @@ class HelpTableViewController: UITableViewController {
     // MARK: - Properties
     
     var strings: [[String]]!;
-    var titleFont: UIFont!;
-    var subtitleFont: UIFont!;
-    var entryFont: UIFont!;
+    let titleFont = UIFont.systemFont(ofSize: 20.0, weight: UIFontWeightBold)
+    let subtitleFont = UIFont.systemFont(ofSize: 17.0, weight: UIFontWeightMedium);
+    let entryFont = UIFont.systemFont(ofSize: 15.0);
 
     // MARK: - View Prep
     
@@ -24,11 +24,6 @@ class HelpTableViewController: UITableViewController {
         
         //Load text into the strings array
         createTextArrays();
-        
-        //Set up UIFonts
-        titleFont = UIFont.systemFont(ofSize: 20.0, weight: UIFontWeightBold)
-        subtitleFont = UIFont.systemFont(ofSize: 17.0, weight: UIFontWeightMedium);
-        entryFont = UIFont.systemFont(ofSize: 15.0);
     }
 
     override func didReceiveMemoryWarning() {

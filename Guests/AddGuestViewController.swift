@@ -111,6 +111,13 @@ class AddGuestViewController: UITableViewController, UIPickerViewDelegate, UIPic
             return 3 + seats;
         }
     }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if (section == 1) {
+            return TitleViewController.footerSize;
+        }
+        return UITableViewAutomaticDimension;
+    }
 
     // MARK: - Navigation
     

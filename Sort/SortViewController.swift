@@ -16,12 +16,18 @@ class SortViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var applySortButton: UIButton!
     @IBOutlet weak var sortButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
+    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView();
+    
     
     // View Properties
-    var activeSize: CGSize!;
-    var inactiveSize: CGSize!;
-    //var queue = DispatchQueue();
+    
+    // Configure activity indicator and sizes
+    lazy var activeSize: CGSize = {
+        return CGSize(width: self.view.frame.width, height: 80);
+    }()
+    lazy var inactiveSize: CGSize = {
+        return CGSize(width: 0, height: 0);
+    }()
     
     
     var tablePlan: TablePlan!;
@@ -46,10 +52,6 @@ class SortViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Disable apply sort button until a sort is loaded
         applySortButton.isEnabled = false;
-        
-        // Configure activity indicator and sizes
-        activeSize = CGSize(width: self.view.frame.width, height: 80);
-        inactiveSize = CGSize(width: 0, height: 0);
         
         self.view.addSubview(activityIndicator);
         activityIndicator.activityIndicatorViewStyle = .whiteLarge;
@@ -154,6 +156,9 @@ class SortViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if sorted && sortSuccessful && section == tablePlan.tableList.count-1 {
+            return TitleViewController.footerSize;
+        }
         return 2;
     }
     

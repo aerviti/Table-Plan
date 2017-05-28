@@ -13,8 +13,8 @@ class Guest : NSObject, NSCoding {
     //MARK: - Properties
     var firstName: String;
     var lastName: String;
-    var table: Table?;
-    var seat: Seat?;
+    weak var table: Table?;
+    weak var seat: Seat?;
     
     enum GuestError: Error {
         case sameGuestError;
@@ -42,11 +42,11 @@ class Guest : NSObject, NSCoding {
     var cannotSitAtTableSize: Int {
         return cannotSitAtTable.count;
     }
-    var tableConstraint: Table?;;
+    var tableConstraint: Table?;
     var hasTableConstraint: Bool {
         return tableConstraint != nil;
     }
-    var groupConstraint: String?;;
+    var groupConstraint: String?;
     var hasGroupConstraint: Bool {
         return groupConstraint != nil;
     }

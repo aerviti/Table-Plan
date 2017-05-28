@@ -103,6 +103,14 @@ class TableViewController: UITableViewController {
     }
     
     
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if (section == 2) {
+            return TitleViewController.footerSize;
+        }
+        return UITableViewAutomaticDimension;
+    }
+    
+    
 
     // MARK: - Navigation
     

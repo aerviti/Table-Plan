@@ -30,7 +30,7 @@ class Table : NSObject, NSCoding {
     var numOfSeats: Int;
     var seats: [Seat];
     var tableFull: Bool;
-    var plan : TablePlan; //Table plan this table belongs to
+    weak var plan : TablePlan?; //Table plan this table belongs to
     
     // UI properties
     var open : Bool = false;

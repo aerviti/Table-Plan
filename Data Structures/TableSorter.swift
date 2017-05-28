@@ -8,15 +8,15 @@
 
 import Foundation
 import GameplayKit
+import FirebaseAnalytics
 
 class TableSorter {
     
     // MARK: - Properties
     
-    var tablePlan: TablePlan;
+    weak var tablePlan: TablePlan?;
     var unseatedGuests: [Guest];
     var extraGuests: [Guest];
-    
     
     
     // MARK: - Initialization
@@ -212,6 +212,14 @@ class TableSorter {
         }
         
         var table: Table? = nil;
+        guard let tablePlan = self.tablePlan else {
+            print("No assigned tablePlan from Table Sorter (sortGuest)");
+            FIRAnalytics.logEvent(withName: "Caught_Error", parameters: [
+                "name": "sortGuest" as NSObject,
+                "full_text": "No assigned tablePlan from TableSorter." as NSObject
+                ]);
+            return false;
+        }
         var tableList = tablePlan.tableList;
         let hasNeighbors = (guest.mustSitNextTo.count > 0);
         
@@ -425,6 +433,14 @@ class TableSorter {
     /* Helper function that seats a guest and its must-sit-next-to guests at any potential table assuming they don't already have a table. */
     fileprivate func seatGuestWithNeighbors(_ guest: Guest, restrictedTables: Set<Table>) -> Bool {
         // Randomly pick a table within list and assess if not restricted
+        guard let tablePlan = self.tablePlan else {
+            print("No assigned tablePlan from TableSorter (seatGuestWithNeighbors)");
+            FIRAnalytics.logEvent(withName: "Caught_Error", parameters: [
+                "name": "seatGuestWithNeighbors" as NSObject,
+                "full_text": "No assigned tablePlan from TableSorter." as NSObject
+                ]);
+            return false;
+        }
         let tableList = tablePlan.tableList;
         let tableIndexGenerator = NumberGenerator(maxRange: tableList.count);
         var tableIndex: Int? = tableIndexGenerator.generateNumber();

@@ -12,9 +12,9 @@ class GuestPickerViewController: UITableViewController, UISearchResultsUpdating,
 
     // MARK: Properties
     
-    var searchController: UISearchController!;
+    weak var searchController: UISearchController!;
     var tablePlan: TablePlan!;
-    var unfilteredGuests: [Guest]!
+    var unfilteredGuests: [Guest]!;
     var filteredGuests: [Guest] = [Guest]();
     var chosenGuest: Guest? = nil;
     var addingConstraint: Bool = false;
@@ -37,12 +37,13 @@ class GuestPickerViewController: UITableViewController, UISearchResultsUpdating,
         super.viewDidLoad()
         
         // Set up search bar
-        searchController = UISearchController(searchResultsController: nil);
+        let searchController = UISearchController(searchResultsController: nil);
         searchController.dimsBackgroundDuringPresentation = false;
         searchController.searchResultsUpdater = self;
         definesPresentationContext = true;
         tableView.tableHeaderView = searchController.searchBar;
-        self.searchController.loadViewIfNeeded();
+        searchController.loadViewIfNeeded();
+        self.searchController = searchController;
         
         // Set up search bar scope controller
         searchController.searchBar.scopeButtonTitles = ["All", "Unseated"];

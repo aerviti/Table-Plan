@@ -12,7 +12,7 @@ class TableButton: UIButton {
     
     // MARK: Properties
     
-    var cell : TableTableViewCell? = nil;
+    weak var cell : TableTableViewCell? = nil;
     
     /*
     // Only override drawRect: if you perform custom drawing.

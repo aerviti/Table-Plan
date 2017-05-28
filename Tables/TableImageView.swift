@@ -15,11 +15,11 @@ class TableImageView: UIView {
     var table : Table? = nil;
     var seatImages : [UIImageView] = [UIImageView]();
     var seatLabels : [UILabel] = [UILabel]();
-    var tableView : UIView = UIView();
-    var tableImg : UIImageView = UIImageView();
-    var emptyLabel : UILabel = UILabel();
-    var maxChairs = 20;
-    var roundMaxChairs = 12;
+    let tableView : UIView = UIView();
+    let tableImg : UIImageView = UIImageView();
+    let emptyLabel : UILabel = UILabel();
+    let maxChairs = 20;
+    let roundMaxChairs = 12;
     var highlightedSeat : Int? = nil;
     
     //Reused UIImages
@@ -292,9 +292,9 @@ class TableImageView: UIView {
     fileprivate func layoutRound() {
         // Resize outer tableView to house table image and chair images
         let chairSize: CGFloat = 20;
-        let maxCircumference = 2 * ((self.frame.height/2)-chairSize*2) * CGFloat(M_PI);
+        let maxCircumference = 2 * ((self.frame.height/2)-chairSize*2) * CGFloat(Double.pi);
         let tableSegmentSize = maxCircumference / CGFloat(roundMaxChairs);
-        let tableRadius = (tableSegmentSize*CGFloat(table!.numOfSeats)) / CGFloat(2*M_PI);
+        let tableRadius = (tableSegmentSize*CGFloat(table!.numOfSeats)) / CGFloat(2*Double.pi);
         let tableDimension = tableRadius*2;
         let viewDimension = tableDimension + chairSize*4;
         tableView.frame = CGRect(x: 0, y: 0, width: viewDimension, height: viewDimension);
@@ -311,13 +311,13 @@ class TableImageView: UIView {
         let tableCenterY: CGFloat = tableView.center.y;
         let chairRadius: CGFloat = tableRadius + chairSize/2;
         let labelRadius: CGFloat = chairRadius + chairSize;
-        let radianSegment: CGFloat = CGFloat(2*M_PI) / CGFloat(table!.numOfSeats);
+        let radianSegment: CGFloat = CGFloat(2*Double.pi) / CGFloat(table!.numOfSeats);
         for chairNum in 0..<table!.numOfSeats {
             
             // Place seat UIImageView
             let currentSeat = seatImages[chairNum];
-            let seatStartX = tableCenterX - chairRadius * cos(radianSegment * CGFloat(chairNum) + CGFloat(M_PI_2));
-            let seatStartY = tableCenterY - chairRadius * sin(radianSegment * CGFloat(chairNum) + CGFloat(M_PI_2));
+            let seatStartX = tableCenterX - chairRadius * cos(radianSegment * CGFloat(chairNum) + CGFloat(Double.pi/2));
+            let seatStartY = tableCenterY - chairRadius * sin(radianSegment * CGFloat(chairNum) + CGFloat(Double.pi/2));
             currentSeat.frame = CGRect(x: 0, y: 0, width: chairSize, height: chairSize);
             currentSeat.center.x = seatStartX;
             currentSeat.center.y = seatStartY;
@@ -325,8 +325,8 @@ class TableImageView: UIView {
             
             // Place seat UILabel
             let currentLabel = seatLabels[chairNum];
-            let labelStartX = tableCenterX - labelRadius * cos(radianSegment * CGFloat(chairNum) + CGFloat(M_PI_2));
-            let labelStartY = tableCenterY - labelRadius * sin(radianSegment * CGFloat(chairNum) + CGFloat(M_PI_2));
+            let labelStartX = tableCenterX - labelRadius * cos(radianSegment * CGFloat(chairNum) + CGFloat(Double.pi/2));
+            let labelStartY = tableCenterY - labelRadius * sin(radianSegment * CGFloat(chairNum) + CGFloat(Double.pi/2));
             currentLabel.frame = CGRect(x: 0, y: 0, width: chairSize, height: chairSize);
             currentLabel.center.x = labelStartX;
             currentLabel.center.y = labelStartY;

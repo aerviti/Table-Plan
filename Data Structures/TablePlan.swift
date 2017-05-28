@@ -345,12 +345,6 @@ class TablePlan : NSObject, NSCoding {
     
     //MARK: - NSCoding
     
-    //Archiving Paths
-    static var DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!;
-    static var ArchiveURL = DocumentsDirectory.appendingPathComponent("TablePlans");
-    
-    
-    //NSCoding
     func encode(with aCoder: NSCoder) {
         aCoder.encode(name, forKey: "name");
         aCoder.encode(date, forKey: "date");

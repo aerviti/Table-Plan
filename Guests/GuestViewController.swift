@@ -40,7 +40,7 @@ class GuestViewController: UITableViewController {
     @IBOutlet weak var mustSitInTableGroupAddButton: UIButton!
     @IBOutlet weak var mustSitInTableGroupRemoveButton: UIButton!
     @IBOutlet weak var mustSitInTableGroupField: UILabel!
-    var selectedButton: UIButton? = nil;
+    weak var selectedButton: UIButton? = nil;
 
     // MARK: - View Prep
     
@@ -136,6 +136,13 @@ class GuestViewController: UITableViewController {
         }else {
             return 10;
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if (section == 3) {
+            return TitleViewController.footerSize;
+        }
+        return UITableViewAutomaticDimension;
     }
 
     

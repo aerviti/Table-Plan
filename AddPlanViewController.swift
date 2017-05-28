@@ -10,6 +10,7 @@ import UIKit
 
 class AddPlanViewController: UIViewController, UINavigationBarDelegate, UITextFieldDelegate {
     
+    
     //MARK: Properties
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var nameEntry: UITextField!
@@ -17,11 +18,22 @@ class AddPlanViewController: UIViewController, UINavigationBarDelegate, UITextFi
     @IBOutlet weak var saveButton: UIBarButtonItem!
 
     var tablePlan: TablePlan? = nil; //Table Plan to be transfered
+    var seguedFromSettings: Bool = false;
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Set up delegates and disable save button.
+        
+        // Set up fields if loaded in from settings page
+        if (seguedFromSettings && tablePlan != nil) {
+            nameEntry.text = tablePlan!.name;
+            let dateFormatter = DateFormatter();
+            dateFormatter.dateFormat = "MMM d, yyyy";
+            if let date = dateFormatter.date(from: tablePlan!.date) {
+                dateEntry.setDate(date, animated: false);
+            }
+        }
+        
+        // Set up delegates and disable/enable save button.
         navigationBar.delegate = self;
         nameEntry.delegate = self;
         checkValidName();
@@ -63,6 +75,7 @@ class AddPlanViewController: UIViewController, UINavigationBarDelegate, UITextFi
         checkValidName();
     }
     
+    
     //MARK: - UINavigationBarDelegate
     
     func position(for bar: UIBarPositioning) -> UIBarPosition {
@@ -73,17 +86,33 @@ class AddPlanViewController: UIViewController, UINavigationBarDelegate, UITextFi
     //MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let sender = (sender as? UIBarButtonItem), saveButton === sender {
+        if (segue.identifier == "UnwindAddPlanSegue") {
             let name = nameEntry.text ?? "";
             let dateFormatter = DateFormatter();
             dateFormatter.dateStyle = .medium;
             let date = dateFormatter.string(from: dateEntry.date);
             tablePlan = TablePlan(name: name, date: date);
+            
+        }else if (segue.identifier == "UnwindEditPlanSegue") {
+            let name = nameEntry.text ?? "";
+            let dateFormatter = DateFormatter();
+            dateFormatter.dateStyle = .medium;
+            let date = dateFormatter.string(from: dateEntry.date);
+            tablePlan?.name = name;
+            tablePlan?.date = date;
         }
     }
     
     
     //MARK: - Actions
+    
+    @IBAction func savePlan(_ sender: UIBarButtonItem) {
+        if seguedFromSettings {
+            self.performSegue(withIdentifier: "UnwindEditPlanSegue", sender: sender);
+        }else {
+            self.performSegue(withIdentifier: "UnwindAddPlanSegue", sender: sender);
+        }
+    }
     
     @IBAction func cancelPlan(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil);

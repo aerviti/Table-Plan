@@ -37,11 +37,11 @@ class FloorPlanTableView: UIView {
     // View Properties
     var table : Table? = nil;
     var seatImages: [UIImageView] = [UIImageView]();
-    var tableView: UIView = UIView();
-    var tableImg: UIImageView = UIImageView();
-    var nameLabel: UILabel = UILabel();
-    var groupLabel: UILabel = UILabel();
-    var maxChairs = 20;
+    let tableView: UIView = UIView();
+    let tableImg: UIImageView = UIImageView();
+    let nameLabel: UILabel = UILabel();
+    let groupLabel: UILabel = UILabel();
+    let maxChairs = 20;
     
     // Reused UIImages
     let guestGray = UIImage(named: "guest");
@@ -122,7 +122,7 @@ class FloorPlanTableView: UIView {
             
         case .round:
             let tableCircumference = FloorPlanTableView.MAXTABLECIRCUMFERENCE/12 * CGFloat(table.numOfSeats);
-            let tableRadius = tableCircumference / CGFloat(2*M_PI);
+            let tableRadius = tableCircumference / CGFloat(2*Double.pi);
             viewWidth = tableRadius*2 + FloorPlanTableView.CHAIRSIZE*2;
             viewHeight = tableRadius*2 + FloorPlanTableView.CHAIRSIZE*2;
         }
@@ -293,7 +293,7 @@ class FloorPlanTableView: UIView {
         
         // Set view's frame to follow the given table
         let tableCircumference = maxTableCircumference/12 * CGFloat(table!.numOfSeats);
-        let tableRadius = tableCircumference / CGFloat(2*M_PI);
+        let tableRadius = tableCircumference / CGFloat(2*Double.pi);
         tableView.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height);
         nameLabel.text = table!.name;
         groupLabel.text = table!.tableGroup;
@@ -310,13 +310,13 @@ class FloorPlanTableView: UIView {
         let tableCenterX: CGFloat = tableView.center.x;
         let tableCenterY: CGFloat = tableView.center.y;
         let chairRadius: CGFloat = tableRadius + chairSize/2;
-        let radianSegment: CGFloat = CGFloat(2*M_PI) / CGFloat(table!.numOfSeats);
+        let radianSegment: CGFloat = CGFloat(2*Double.pi) / CGFloat(table!.numOfSeats);
         for chairNum in 0..<table!.numOfSeats {
             
             // Place seat UIImageView
             let currentSeat = seatImages[chairNum];
-            let seatStartX = tableCenterX - chairRadius * cos(radianSegment * CGFloat(chairNum) + CGFloat(M_PI_2));
-            let seatStartY = tableCenterY - chairRadius * sin(radianSegment * CGFloat(chairNum) + CGFloat(M_PI_2));
+            let seatStartX = tableCenterX - chairRadius * cos(radianSegment * CGFloat(chairNum) + CGFloat(Double.pi/2));
+            let seatStartY = tableCenterY - chairRadius * sin(radianSegment * CGFloat(chairNum) + CGFloat(Double.pi/2));
             currentSeat.frame = CGRect(x: 0, y: 0, width: chairSize, height: chairSize);
             currentSeat.center.x = seatStartX;
             currentSeat.center.y = seatStartY;
@@ -350,7 +350,7 @@ class FloorPlanTableView: UIView {
             
         case .round:
             let tableCircumference = FloorPlanTableView.MAXTABLECIRCUMFERENCE/12 * CGFloat(table.numOfSeats);
-            let tableRadius = tableCircumference / CGFloat(2*M_PI);
+            let tableRadius = tableCircumference / CGFloat(2*Double.pi);
             viewWidth = tableRadius*2 + FloorPlanTableView.CHAIRSIZE*2;
             viewHeight = tableRadius*2 + FloorPlanTableView.CHAIRSIZE*2;
         }

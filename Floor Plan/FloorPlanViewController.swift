@@ -23,7 +23,12 @@ class FloorPlanViewController: UIViewController, UIPopoverPresentationController
 
     // MARK: Properties
     @IBOutlet weak var scrollView: UIScrollView!
-    var infoAlert: UIAlertController!;
+    lazy var infoAlert: UIAlertController = {
+        let alert = UIAlertController(title: "Instructions", message: self.floorPlanInfo, preferredStyle: .alert);
+        let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: nil);
+        alert.addAction(okButton);
+        return alert;
+    }()
     
     var tablePlan: TablePlan!;
     var tableViews: Set<FloorPlanTableView> = Set<FloorPlanTableView>();
@@ -78,11 +83,6 @@ class FloorPlanViewController: UIViewController, UIPopoverPresentationController
         for table in tablePlan!.tableList {
             placeTable(table);
         }
-        
-        //Set up info alert
-        infoAlert = UIAlertController(title: "Instructions", message: floorPlanInfo, preferredStyle: .alert);
-        let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: nil);
-        infoAlert.addAction(okButton);
     }
     
     
@@ -101,6 +101,16 @@ class FloorPlanViewController: UIViewController, UIPopoverPresentationController
             present(infoAlert, animated: true, completion: nil);
             tablePlan!.floorPlanNotOpened = false;
         }
+        
+        // Hide ad
+        let navBar = self.navigationController!.tabBarController! as! TabBarController;
+        navBar.adBanner.isHidden = true;
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        // Display ad
+        let navBar = self.navigationController!.tabBarController! as! TabBarController;
+        navBar.adBanner.isHidden = false;
     }
     
     
@@ -120,7 +130,7 @@ class FloorPlanViewController: UIViewController, UIPopoverPresentationController
             
             // Rotate table if table loaded in is rotated
             if table.rotated {
-                tableView.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI_2));
+                tableView.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2));
             }
             tableBoundsCheck(tableView);
         }
@@ -134,6 +144,8 @@ class FloorPlanViewController: UIViewController, UIPopoverPresentationController
             if (!tableView.table!.isPlaced()) {
                 tableView.removeFromSuperview();
                 tableViews.remove(tableView);
+            }else {
+                tableView.setNeedsDisplay();
             }
         }
     }
@@ -325,7 +337,7 @@ class FloorPlanViewController: UIViewController, UIPopoverPresentationController
                     self.chosenTableView!.transform = CGAffineTransform(rotationAngle: 0);
                 }else {
                     self.chosenTable!.rotated = true;
-                    self.chosenTableView!.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI_2));
+                    self.chosenTableView!.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/2));
                 }
             }) 
             tableBoundsCheck(chosenTableView!);

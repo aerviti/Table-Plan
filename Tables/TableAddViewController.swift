@@ -107,11 +107,14 @@ class TableAddViewController: UITableViewController, UIPickerViewDelegate, UIPic
     // Helper func that sets the minimum value for the stepper based off of the table type
     fileprivate func setStepperDefaults(_ type : Table.TableType) {
         if (type == .twoSidedRect) {
+            if (seatCountStepper.value < 2) {
+                seatCount.text = "[2]";
+            }
             seatCountStepper.minimumValue = 2;
             seatCountStepper.maximumValue = 20;
             
         }else if (type == .oneSidedRect) {
-            seatCountStepper.minimumValue = 2;
+            seatCountStepper.minimumValue = 1;
             if (seatCountStepper.value > 10) {
                 seatCount.text = "[10]";
             }
@@ -144,6 +147,14 @@ class TableAddViewController: UITableViewController, UIPickerViewDelegate, UIPic
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    
+    // MARK: - Table View Datasource
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+      return TitleViewController.footerSize;
     }
     
     
